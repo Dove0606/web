@@ -143,6 +143,67 @@
   }
   .tool-card:hover .arrow { color: #5856d6; }
 
+  /* ── 新闻区 ── */
+  .news-section {
+    margin-top: 12px;
+    margin-bottom: 28px;
+  }
+  .news-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .news-item {
+    background: #fff;
+    border: 1px solid #e5e5e7;
+    border-radius: 12px;
+    padding: 16px 20px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    text-decoration: none;
+    color: inherit;
+    transition: box-shadow 0.2s;
+  }
+  .news-item:hover {
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    border-color: #d2d2d7;
+  }
+  .news-date {
+    font-size: 12px;
+    color: #86868b;
+    white-space: nowrap;
+    flex-shrink: 0;
+    min-width: 52px;
+    padding-top: 2px;
+  }
+  .news-body {
+    flex: 1;
+    min-width: 0;
+  }
+  .news-title {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 3px;
+  }
+  .news-summary {
+    font-size: 13px;
+    color: #6e6e73;
+  }
+  .news-tag {
+    display: inline-block;
+    font-size: 11px;
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-weight: 500;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+  .news-tag-model    { background: #e8f0fe; color: #1a73e8; }
+  .news-tag-product  { background: #f3e8fd; color: #7b1fa2; }
+  .news-tag-update   { background: #e8f8e8; color: #1d7d1d; }
+  .news-tag-industry { background: #fff3e0; color: #b36b00; }
+
   /* ── 底栏 ── */
   footer {
     text-align: center;
@@ -386,6 +447,72 @@ const SOTA_DATA = {
         }
       ]
     }
+  ],
+  news: [
+    {
+      date: "5.5",
+      tag: "新模型",
+      tagType: "model",
+      title: "GPT-5.5 Instant 免费开放，成为 ChatGPT 默认模型",
+      summary: "自动选择 GPT-5.3 Instant 或 GPT-5.5 Thinking，高风险领域幻觉率降低 52.5%",
+      url: "https://openai.com/index/introducing-gpt-5-5/"
+    },
+    {
+      date: "5.7",
+      tag: "新模型",
+      tagType: "model",
+      title: "Claude Opus 4.7 正式发布，视觉能力大幅提升",
+      summary: "支持 2576px 高分辨率图像输入，生成界面/文档质量显著提升，LMArena 综合榜首",
+      url: "https://www.anthropic.com/news/claude-opus-4-7"
+    },
+    {
+      date: "5.7",
+      tag: "新模型",
+      tagType: "model",
+      title: "OpenAI 发布三款实时语音模型，上下文窗口扩至 128K",
+      summary: "GPT-Realtime-2 具备 GPT-5 级推理；Translate 支持 70+ 语言输入→13 语言输出实时翻译",
+      url: ""
+    },
+    {
+      date: "5.8",
+      tag: "功能更新",
+      tagType: "update",
+      title: "OpenAI Codex 发布最大单次更新，正式登陆 Windows",
+      summary: "新增语音听写输入、/goal 持久化工作流、MCP 自定义服务器，原生 PowerShell 沙箱运行",
+      url: "https://github.com/openai/codex/releases"
+    },
+    {
+      date: "5.9",
+      tag: "新模型",
+      tagType: "model",
+      title: "百度发布文心大模型 5.1，预训练成本仅为业界 6%",
+      summary: "LMArena 搜索榜国内第一、全球第四，多维弹性预训练技术大幅降低训练成本",
+      url: "https://www.qbitai.com/2026/05/414496.html"
+    },
+    {
+      date: "5.6",
+      tag: "新产品",
+      tagType: "product",
+      title: "Meta 推出消费级 AI 代理助手，基于 LLaMA 3.5",
+      summary: "具备自主规划、多步骤任务执行和跨应用协同能力，可操控手机完成复杂任务链",
+      url: ""
+    },
+    {
+      date: "5.5",
+      tag: "新模型",
+      tagType: "model",
+      title: "Midjourney V8 Alpha 开放测试，速度提升 4-5 倍",
+      summary: "渲染速度大幅提升，文字渲染和人体解剖细节改进显著，已在 alpha.midjourney.com 可用",
+      url: "https://alpha.midjourney.com"
+    },
+    {
+      date: "5.7",
+      tag: "功能更新",
+      tagType: "update",
+      title: "Claude Code 速率限制翻倍",
+      summary: "Pro 和 Max 用户的 Claude Code 使用速率限制提高一倍，长时间编程会话不再频繁触顶",
+      url: ""
+    }
   ]
 };
 
@@ -396,7 +523,9 @@ function render(data) {
   document.getElementById("update-date").textContent = "更新于 " + data.updateDate;
 
   const app = document.getElementById("app");
-  app.innerHTML = data.categories.map(cat => `
+
+  // 工具卡片
+  let html = data.categories.map(cat => `
     <section class="category">
       <div class="category-title">${cat.title}</div>
       <div class="tools-grid">
@@ -416,6 +545,31 @@ function render(data) {
       </div>
     </section>
   `).join("");
+
+  // 本周动态
+  if (data.news && data.news.length) {
+    html += `
+      <section class="news-section">
+        <div class="category-title">本周动态</div>
+        <div class="news-list">
+          ${data.news.map(n => {
+            const tag = n.url
+              ? `<a class="news-item" href="${n.url}" target="_blank" rel="noopener">`
+              : `<div class="news-item">`;
+            const close = n.url ? `</a>` : `</div>`;
+            return `${tag}
+              <div class="news-date">${n.date}</div>
+              <div class="news-body">
+                <div class="news-title"><span class="news-tag news-tag-${n.tagType}">${n.tag}</span>${n.title}</div>
+                <div class="news-summary">${n.summary}</div>
+              </div>
+            ${close}`;
+          }).join("")}
+        </div>
+      </section>`;
+  }
+
+  app.innerHTML = html;
 }
 
 render(SOTA_DATA);
