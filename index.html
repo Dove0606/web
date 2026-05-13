@@ -3,235 +3,330 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SOTA - AI 工具选型指南</title>
+<title>SOTA — AI 工具选型指南</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  ::selection{background:rgba(201,169,110,.35);color:#fff}
+  ::-webkit-scrollbar{width:5px}
+  ::-webkit-scrollbar-track{background:transparent}
+  ::-webkit-scrollbar-thumb{background:#222;border-radius:4px}
 
-  body {
-    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
-    background: #f5f5f7;
-    color: #1d1d1f;
-    line-height: 1.5;
+  body{
+    font-family:-apple-system,'PingFang SC','Helvetica Neue','Microsoft YaHei',sans-serif;
+    background:#0a0a0a;color:#c8c4bc;line-height:1.7;
+    -webkit-font-smoothing:antialiased;overflow-x:hidden;
   }
-
-  /* ── 顶栏 ── */
-  header {
-    background: #fff;
-    border-bottom: 1px solid #e5e5e7;
-    padding: 20px 32px;
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    position: sticky;
-    top: 0;
-    z-index: 10;
-  }
-  header h1 {
-    font-size: 22px;
-    font-weight: 700;
-    letter-spacing: -0.5px;
-  }
-  header .update-info {
-    font-size: 13px;
-    color: #86868b;
+  /* 胶片质感 */
+  body::after{
+    content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;opacity:.018;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size:200px 200px;
   }
 
-  /* ── 主体 ── */
-  main {
-    max-width: 1200px;
-    margin: 24px auto;
-    padding: 0 24px;
+  /* ══ 动态渐变背景 ══ */
+  .bg-mesh{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+  .blob{position:absolute;border-radius:50%;will-change:transform}
+  .blob-1{
+    width:700px;height:700px;background:#0f2a5e;
+    top:-250px;left:-150px;opacity:.18;filter:blur(120px);
+    animation:drift1 22s ease-in-out infinite;
+  }
+  .blob-2{
+    width:600px;height:600px;background:#3a1255;
+    bottom:-200px;right:-120px;opacity:.15;filter:blur(110px);
+    animation:drift2 28s ease-in-out infinite;
+  }
+  .blob-3{
+    width:500px;height:500px;background:#5e3a0f;
+    top:35%;left:55%;opacity:.10;filter:blur(100px);
+    animation:drift3 19s ease-in-out infinite;
+  }
+  @keyframes drift1{
+    0%,100%{transform:translate(0,0) scale(1)}
+    33%{transform:translate(140px,80px) scale(1.12)}
+    66%{transform:translate(-60px,160px) scale(.92)}
+  }
+  @keyframes drift2{
+    0%,100%{transform:translate(0,0) scale(1)}
+    33%{transform:translate(-100px,-80px) scale(1.15)}
+    66%{transform:translate(80px,-40px) scale(.9)}
+  }
+  @keyframes drift3{
+    0%,100%{transform:translate(0,0) scale(1)}
+    50%{transform:translate(-130px,90px) scale(1.2)}
   }
 
-  /* ── 类别区块 ── */
-  .category {
-    margin-bottom: 28px;
+  /* ══ 头部 ══ */
+  header{
+    position:relative;z-index:2;text-align:center;
+    padding:108px 24px 0;
+    animation:fadeDown .9s ease-out both;
   }
-  .category-title {
-    font-size: 15px;
-    font-weight: 600;
-    color: #6e6e73;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: 12px;
-    padding-left: 4px;
+  @keyframes fadeDown{
+    from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:none}
+  }
+  header h1{
+    font-family:'Noto Serif SC',Georgia,'STSong',serif;
+    font-size:64px;font-weight:700;
+    letter-spacing:24px;text-indent:24px;
+    background:linear-gradient(135deg,#f0ece4 0%,#c9a96e 50%,#f0ece4 100%);
+    background-size:200% 200%;
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+    background-clip:text;
+    animation:shimmer 6s ease-in-out infinite;
+  }
+  @keyframes shimmer{
+    0%,100%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+  }
+  .subtitle{
+    font-family:'Noto Serif SC',Georgia,serif;
+    font-size:15px;color:#555;letter-spacing:8px;text-indent:8px;margin-top:14px;
+  }
+  .update-info{display:block;font-size:13px;color:#333;margin-top:14px}
+
+  /* 数据条 */
+  .hero-stats{
+    display:flex;justify-content:center;gap:36px;
+    margin-top:40px;
+  }
+  .stat{display:flex;flex-direction:column;align-items:center}
+  .stat-value{
+    font-family:'Noto Serif SC',Georgia,serif;
+    font-size:28px;font-weight:700;color:#e0ddd6;
+  }
+  .stat-label{font-size:12px;color:#444;margin-top:2px;letter-spacing:2px}
+  .header-rule{
+    width:200px;height:1px;margin:48px auto;
+    background:linear-gradient(90deg,transparent,rgba(201,169,110,.4),transparent);
+    animation:pulse-line 4s ease-in-out infinite;
+  }
+  @keyframes pulse-line{
+    0%,100%{opacity:.4;transform:scaleX(.85)}
+    50%{opacity:1;transform:scaleX(1)}
   }
 
-  /* ── 工具卡片网格 ── */
-  .tools-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-    gap: 12px;
+  /* ══ 粘性导航 ══ */
+  .sticky-nav{
+    position:sticky;top:0;z-index:100;
+    background:rgba(10,10,10,.75);
+    backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+    border-bottom:1px solid rgba(255,255,255,.04);
+    padding:10px 0;
+    transition:box-shadow .3s;
+  }
+  .sticky-nav.scrolled{box-shadow:0 4px 24px rgba(0,0,0,.4)}
+  .nav-inner{
+    display:flex;gap:6px;max-width:820px;margin:0 auto;
+    padding:0 24px;overflow-x:auto;scrollbar-width:none;
+    -ms-overflow-style:none;
+  }
+  .nav-inner::-webkit-scrollbar{display:none}
+  .nav-pill{
+    white-space:nowrap;padding:7px 16px;border-radius:24px;
+    font-size:13px;color:#555;text-decoration:none;
+    background:rgba(255,255,255,.02);
+    border:1px solid rgba(255,255,255,.04);
+    transition:all .25s ease;flex-shrink:0;
+  }
+  .nav-pill:hover{color:#999;background:rgba(255,255,255,.04)}
+  .nav-pill.active{
+    color:#e0ddd6;
+    background:rgba(255,255,255,.06);
+    border-color:rgba(255,255,255,.1);
   }
 
-  .tool-card {
-    background: #fff;
-    border-radius: 12px;
-    padding: 18px 20px;
-    display: flex;
-    align-items: flex-start;
-    gap: 14px;
-    transition: box-shadow 0.2s;
-    border: 1px solid #e5e5e7;
-    text-decoration: none;
-    color: inherit;
-    cursor: pointer;
+  /* ══ 主体 ══ */
+  main{position:relative;z-index:2;max-width:860px;margin:0 auto;padding:48px 32px 0}
+
+  /* ══ 分类区块 ══ */
+  .category{
+    margin-bottom:88px;
+    opacity:0;transform:translateY(32px);
+    transition:opacity .75s cubic-bezier(.23,1,.32,1),transform .75s cubic-bezier(.23,1,.32,1);
   }
-  .tool-card:hover {
-    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-    border-color: #d2d2d7;
+  .category.visible{opacity:1;transform:none}
+
+  .category-header{display:flex;align-items:center;gap:18px;margin-bottom:28px}
+  .category-icon-wrap{
+    width:52px;height:52px;border-radius:16px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:24px;flex-shrink:0;
+    background:rgba(var(--accent-rgb),.08);
+    border:1px solid rgba(var(--accent-rgb),.15);
+  }
+  .category-title-group{flex:1}
+  .category-title{
+    font-family:'Noto Serif SC',Georgia,serif;
+    font-size:24px;font-weight:600;letter-spacing:2px;color:#e0ddd6;
+  }
+  .category-count{font-size:12px;color:#444;margin-top:3px;letter-spacing:1px}
+
+  /* ══ 工具卡片网格 ══ */
+  .tools-grid{
+    display:grid;grid-template-columns:1fr 1fr;gap:14px;
+  }
+  .tool-card{
+    background:rgba(255,255,255,.018);
+    border:1px solid rgba(255,255,255,.045);
+    border-radius:16px;padding:26px;
+    display:flex;align-items:flex-start;gap:18px;
+    text-decoration:none;color:inherit;
+    transition:all .35s cubic-bezier(.23,1,.32,1);
+    position:relative;overflow:hidden;
+  }
+  /* 卡片顶部渐变边 */
+  .tool-card::before{
+    content:'';position:absolute;top:0;left:0;right:0;height:2px;
+    background:linear-gradient(90deg,transparent,rgba(var(--accent-rgb),.0),transparent);
+    transition:background .35s;
+  }
+  .tool-card:hover::before{
+    background:linear-gradient(90deg,transparent,rgba(var(--accent-rgb),.5),transparent);
+  }
+  .tool-card:hover{
+    background:rgba(255,255,255,.03);
+    border-color:rgba(var(--accent-rgb),.2);
+    box-shadow:0 8px 40px rgba(var(--accent-rgb),.06),0 0 1px rgba(var(--accent-rgb),.2);
+    transform:translateY(-3px);
   }
 
-  /* 排名徽标 */
-  .rank {
-    width: 28px;
-    height: 28px;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 13px;
-    font-weight: 700;
-    flex-shrink: 0;
-    margin-top: 1px;
+  .card-rank{
+    font-family:'Noto Serif SC',Georgia,serif;
+    font-size:44px;font-weight:700;
+    color:rgba(255,255,255,.035);
+    flex-shrink:0;width:44px;text-align:center;
+    line-height:1;user-select:none;
+    transition:color .35s;
   }
-  .rank-1 { background: #f0f0ff; color: #5856d6; }
-  .rank-2 { background: #f0f0f0; color: #636366; }
-  .rank-3 { background: #f0f0f0; color: #636366; }
-  .rank-4 { background: #f0f0f0; color: #86868b; }
+  .tool-card:hover .card-rank{color:rgba(var(--accent-rgb),.2)}
 
-  .tool-info {
-    flex: 1;
-    min-width: 0;
+  .card-body{flex:1;min-width:0}
+  .card-header{display:flex;align-items:baseline;gap:10px;margin-bottom:8px}
+  .card-name{
+    font-size:16px;font-weight:600;flex:1;min-width:0;
+    color:#d5d0c8;transition:color .2s;
   }
-  .tool-name {
-    font-size: 15px;
-    font-weight: 600;
-    margin-bottom: 3px;
+  .tool-card:hover .card-name{color:#fff}
+  .card-arrow{
+    color:#2a2a2a;font-size:13px;flex-shrink:0;
+    transition:transform .3s cubic-bezier(.23,1,.32,1),color .3s;
   }
-  .tool-desc {
-    font-size: 13px;
-    color: #6e6e73;
-    margin-bottom: 6px;
-  }
+  .tool-card:hover .card-arrow{transform:translateX(5px);color:var(--accent)}
+  .card-desc{font-size:13px;color:#666;line-height:1.75;margin-bottom:14px}
 
-  /* 标签 */
-  .tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 5px;
+  /* ══ 标签 ══ */
+  .tags{display:flex;flex-wrap:wrap;gap:6px}
+  .tag{
+    font-size:10px;padding:4px 11px;border-radius:20px;
+    font-weight:500;letter-spacing:.4px;border:1px solid;
   }
-  .tag {
-    font-size: 11px;
-    padding: 2px 7px;
-    border-radius: 4px;
-    font-weight: 500;
-  }
-  .tag-free     { background: #e8f8e8; color: #1d7d1d; }
-  .tag-paid     { background: #fff3e0; color: #b36b00; }
-  .tag-vpn      { background: #fce4ec; color: #c62828; }
-  .tag-no-vpn   { background: #e3f2fd; color: #1565c0; }
-  .tag-feature  { background: #f3e8fd; color: #7b1fa2; }
-  .tag-internal { background: #e0f7fa; color: #00838f; }
-
-  /* 跳转箭头 */
-  .arrow {
-    color: #c7c7cc;
-    font-size: 18px;
-    flex-shrink: 0;
-    align-self: center;
-    transition: color 0.2s;
-  }
-  .tool-card:hover .arrow { color: #5856d6; }
-
-  /* ── 新闻区 ── */
-  .news-section {
-    margin-top: 12px;
-    margin-bottom: 28px;
-  }
-  .news-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  .news-item {
-    background: #fff;
-    border: 1px solid #e5e5e7;
-    border-radius: 12px;
-    padding: 16px 20px;
-    display: flex;
-    gap: 14px;
-    align-items: flex-start;
-    text-decoration: none;
-    color: inherit;
-    transition: box-shadow 0.2s;
-  }
-  .news-item:hover {
-    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-    border-color: #d2d2d7;
-  }
-  .news-date {
-    font-size: 12px;
-    color: #86868b;
-    white-space: nowrap;
-    flex-shrink: 0;
-    min-width: 52px;
-    padding-top: 2px;
-  }
-  .news-body {
-    flex: 1;
-    min-width: 0;
-  }
-  .news-title {
-    font-size: 14px;
-    font-weight: 600;
-    margin-bottom: 3px;
-  }
-  .news-summary {
-    font-size: 13px;
-    color: #6e6e73;
-  }
-  .news-tag {
-    display: inline-block;
-    font-size: 11px;
-    padding: 1px 6px;
-    border-radius: 4px;
-    font-weight: 500;
-    margin-right: 6px;
-    vertical-align: middle;
-  }
-  .news-tag-model    { background: #e8f0fe; color: #1a73e8; }
-  .news-tag-product  { background: #f3e8fd; color: #7b1fa2; }
-  .news-tag-update   { background: #e8f8e8; color: #1d7d1d; }
-  .news-tag-industry { background: #fff3e0; color: #b36b00; }
-
-  /* ── 底栏 ── */
-  footer {
-    text-align: center;
-    padding: 32px 24px;
-    font-size: 12px;
-    color: #86868b;
+  .tag-free{background:rgba(74,138,77,.07);color:#5fb863;border-color:rgba(74,138,77,.14)}
+  .tag-paid{background:rgba(190,140,50,.07);color:#c8a050;border-color:rgba(190,140,50,.14)}
+  .tag-vpn{background:rgba(180,70,70,.07);color:#c87070;border-color:rgba(180,70,70,.14)}
+  .tag-no-vpn{background:rgba(60,114,176,.07);color:#6a9fd0;border-color:rgba(60,114,176,.14)}
+  .tag-feature{background:rgba(120,80,160,.07);color:#a080c8;border-color:rgba(120,80,160,.14)}
+  .tag-internal{
+    background:rgba(201,169,110,.1);color:#d4aa4a;
+    border-color:rgba(201,169,110,.22);
   }
 
-  /* ── 响应式 ── */
-  @media (max-width: 720px) {
-    .tools-grid { grid-template-columns: 1fr; }
-    header { padding: 16px 20px; }
-    main { padding: 0 16px; }
+  /* ══ 新闻 ══ */
+  .news-section{
+    margin-bottom:88px;
+    opacity:0;transform:translateY(32px);
+    transition:opacity .75s cubic-bezier(.23,1,.32,1),transform .75s cubic-bezier(.23,1,.32,1);
+  }
+  .news-section.visible{opacity:1;transform:none}
+  .news-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:28px}
+  .news-card{
+    background:rgba(255,255,255,.018);
+    border:1px solid rgba(255,255,255,.045);
+    border-radius:16px;padding:24px;
+    text-decoration:none;color:inherit;display:block;
+    transition:all .3s cubic-bezier(.23,1,.32,1);
+  }
+  .news-card:hover{
+    background:rgba(255,255,255,.035);
+    border-color:rgba(255,255,255,.1);
+    transform:translateY(-2px);
+    box-shadow:0 6px 24px rgba(0,0,0,.3);
+  }
+  .news-meta{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+  .news-date{font-size:11px;color:#3a3a3a;font-weight:500}
+  .news-tag{
+    font-size:10px;font-weight:600;letter-spacing:.5px;
+    padding:3px 9px;border-radius:20px;
+  }
+  .news-tag-model{background:rgba(60,114,176,.12);color:#6a9fd0}
+  .news-tag-product{background:rgba(120,80,160,.12);color:#a080c8}
+  .news-tag-update{background:rgba(74,138,77,.12);color:#5fb863}
+  .news-tag-industry{background:rgba(190,140,50,.12);color:#c8a050}
+  .news-title{font-size:14px;font-weight:600;line-height:1.6;margin-bottom:8px;color:#bbb8b0}
+  .news-card:hover .news-title{color:#e0ddd6}
+  .news-summary{font-size:12px;color:#4a4a4a;line-height:1.7}
+
+  /* ══ 底栏 ══ */
+  footer{
+    position:relative;z-index:2;
+    text-align:center;padding:40px 24px 80px;
+    font-size:11px;color:#222;letter-spacing:.5px;line-height:2.4;
+  }
+
+  /* ══ 响应式 ══ */
+  @media(max-width:700px){
+    header{padding-top:72px}
+    header h1{font-size:40px;letter-spacing:14px;text-indent:14px}
+    .subtitle{font-size:13px;letter-spacing:5px;text-indent:5px}
+    .hero-stats{gap:24px;margin-top:28px}
+    .stat-value{font-size:22px}
+    .header-rule{margin:36px auto}
+    main{padding:36px 16px 0}
+    .category{margin-bottom:60px}
+    .category-icon-wrap{width:44px;height:44px;border-radius:12px;font-size:20px}
+    .category-title{font-size:19px}
+    .tools-grid{grid-template-columns:1fr;gap:12px}
+    .tool-card{padding:20px}
+    .card-rank{font-size:36px;width:36px}
+    .card-name{font-size:15px}
+    .news-grid{grid-template-columns:1fr;gap:12px}
+    .news-section{margin-bottom:60px}
+    .blob-1{width:400px;height:400px}
+    .blob-2{width:350px;height:350px}
+    .blob-3{width:300px;height:300px}
   }
 </style>
 </head>
 <body>
 
+<!-- 动态渐变背景 -->
+<div class="bg-mesh">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+</div>
+
 <header>
   <h1>SOTA</h1>
+  <div class="subtitle">AI 工具选型指南</div>
   <span class="update-info" id="update-date"></span>
+  <div class="hero-stats" id="hero-stats"></div>
+  <div class="header-rule"></div>
 </header>
+
+<nav class="sticky-nav" id="sticky-nav">
+  <div class="nav-inner" id="nav-inner"></div>
+</nav>
 
 <main id="app"></main>
 
 <footer>
-  数据来源：LMArena · Artificial Analysis · TTS Arena · Top3D.ai · X · Reddit · HuggingFace · 各厂商官方发布
+  数据来源：LMArena · Artificial Analysis · TTS Arena · Top3D.ai<br>
+  X · Reddit · HuggingFace · 各厂商官方发布
 </footer>
 
 <script>
@@ -561,59 +656,141 @@ const SOTA_DATA = {
 };
 
 // ═══════════════════════════════════════════════════
+// 分类元信息（图标 + 导航简称 + 主题色）
+// ═══════════════════════════════════════════════════
+const META = {
+  "文字对话与推理":  { icon:"💬", short:"对话",   accent:"#4a9eff", rgb:"74,158,255"  },
+  "文生图":         { icon:"🎨", short:"文生图",  accent:"#a855f7", rgb:"168,85,247"  },
+  "图生图 · 图像编辑":{ icon:"✏️", short:"图像编辑",accent:"#ec4899", rgb:"236,72,153" },
+  "文 / 图生视频":  { icon:"🎬", short:"视频",   accent:"#f59e0b", rgb:"245,158,11"  },
+  "3D 生成":        { icon:"🧊", short:"3D",     accent:"#10b981", rgb:"16,185,129"  },
+  "生成网页 / 做 Demo":{ icon:"🌐", short:"网页", accent:"#06b6d4", rgb:"6,182,212"   },
+  "音频 · 配音":    { icon:"🎙️", short:"配音",   accent:"#f43f5e", rgb:"244,63,94"   },
+  "音乐":           { icon:"🎵", short:"音乐",   accent:"#8b5cf6", rgb:"139,92,246"  },
+};
+const DEFAULT_META = { icon:"🔧", short:"其他", accent:"#888", rgb:"136,136,136" };
+
+// ═══════════════════════════════════════════════════
 // 渲染
 // ═══════════════════════════════════════════════════
 function render(data) {
   document.getElementById("update-date").textContent = "更新于 " + data.updateDate;
 
-  const app = document.getElementById("app");
+  // 头部统计
+  const totalTools = data.categories.reduce((s, c) => s + c.tools.length, 0);
+  document.getElementById("hero-stats").innerHTML = `
+    <div class="stat"><span class="stat-value">${data.categories.length}</span><span class="stat-label">领域</span></div>
+    <div class="stat"><span class="stat-value">${totalTools}</span><span class="stat-label">款工具</span></div>
+    <div class="stat"><span class="stat-value">每周</span><span class="stat-label">自动更新</span></div>
+  `;
 
-  // 工具卡片
-  let html = data.categories.map(cat => `
-    <section class="category">
-      <div class="category-title">${cat.title}</div>
+  // 导航栏
+  document.getElementById("nav-inner").innerHTML = data.categories.map((cat, i) => {
+    const m = META[cat.title] || DEFAULT_META;
+    return `<a class="nav-pill" href="#cat-${i}" data-idx="${i}">${m.icon} ${m.short}</a>`;
+  }).join('') + `<a class="nav-pill" href="#news" data-idx="news">📡 动态</a>`;
+
+  // 主内容
+  const app = document.getElementById("app");
+  let html = data.categories.map((cat, ci) => {
+    const m = META[cat.title] || DEFAULT_META;
+    return `
+    <section class="category" id="cat-${ci}" style="--accent:${m.accent};--accent-rgb:${m.rgb}">
+      <div class="category-header">
+        <div class="category-icon-wrap"><span>${m.icon}</span></div>
+        <div class="category-title-group">
+          <h2 class="category-title">${cat.title}</h2>
+          <div class="category-count">${cat.tools.length} 款推荐</div>
+        </div>
+      </div>
       <div class="tools-grid">
-        ${cat.tools.map((tool, i) => `
+        ${cat.tools.map((tool, ti) => `
           <a class="tool-card" href="${tool.url}" target="_blank" rel="noopener">
-            <div class="rank rank-${i + 1}">${i + 1}</div>
-            <div class="tool-info">
-              <div class="tool-name">${tool.name}</div>
-              <div class="tool-desc">${tool.desc}</div>
+            <div class="card-rank">${ti + 1}</div>
+            <div class="card-body">
+              <div class="card-header">
+                <span class="card-name">${tool.name}</span>
+                <span class="card-arrow">→</span>
+              </div>
+              <div class="card-desc">${tool.desc}</div>
               <div class="tags">
                 ${tool.tags.map(t => `<span class="tag tag-${t.type}">${t.text}</span>`).join("")}
               </div>
             </div>
-            <span class="arrow">›</span>
           </a>
         `).join("")}
       </div>
-    </section>
-  `).join("");
+    </section>`;
+  }).join("");
 
-  // 本周动态
   if (data.news && data.news.length) {
+    const m = META["文 / 图生视频"]; // reuse an accent for news
     html += `
-      <section class="news-section">
-        <div class="category-title">本周动态</div>
-        <div class="news-list">
-          ${data.news.map(n => {
-            const tag = n.url
-              ? `<a class="news-item" href="${n.url}" target="_blank" rel="noopener">`
-              : `<div class="news-item">`;
-            const close = n.url ? `</a>` : `</div>`;
-            return `${tag}
-              <div class="news-date">${n.date}</div>
-              <div class="news-body">
-                <div class="news-title"><span class="news-tag news-tag-${n.tagType}">${n.tag}</span>${n.title}</div>
-                <div class="news-summary">${n.summary}</div>
-              </div>
-            ${close}`;
-          }).join("")}
+    <section class="news-section" id="news" style="--accent:#c9a96e;--accent-rgb:201,169,110">
+      <div class="category-header">
+        <div class="category-icon-wrap"><span>📡</span></div>
+        <div class="category-title-group">
+          <h2 class="category-title">本周动态</h2>
+          <div class="category-count">${data.news.length} 条资讯</div>
         </div>
-      </section>`;
+      </div>
+      <div class="news-grid">
+        ${data.news.map(n => {
+          const open = n.url
+            ? `<a class="news-card" href="${n.url}" target="_blank" rel="noopener">`
+            : `<div class="news-card">`;
+          const close = n.url ? `</a>` : `</div>`;
+          return `${open}
+            <div class="news-meta">
+              <span class="news-date">${n.date}</span>
+              <span class="news-tag news-tag-${n.tagType}">${n.tag}</span>
+            </div>
+            <div class="news-title">${n.title}</div>
+            <div class="news-summary">${n.summary}</div>
+          ${close}`;
+        }).join("")}
+      </div>
+    </section>`;
   }
 
   app.innerHTML = html;
+
+  // ── 滚动入场 ──
+  const fadeObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); fadeObserver.unobserve(e.target); }
+    });
+  }, { threshold: 0.06 });
+  document.querySelectorAll('.category, .news-section').forEach(el => fadeObserver.observe(el));
+
+  // ── 导航高亮 ──
+  const pills = document.querySelectorAll('.nav-pill');
+  const sections = document.querySelectorAll('.category, .news-section');
+  const navObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const id = e.target.id;
+        pills.forEach(p => {
+          const href = p.getAttribute('href').slice(1);
+          p.classList.toggle('active', href === id);
+        });
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '-80px 0px -50% 0px' });
+  sections.forEach(s => navObserver.observe(s));
+
+  // ── 导航滚动阴影 ──
+  const nav = document.getElementById('sticky-nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 200);
+  }, { passive: true });
+
+  // ── 导航点击平滑滚动 ──
+  pills.forEach(p => p.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.getElementById(p.getAttribute('href').slice(1));
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }));
 }
 
 render(SOTA_DATA);
