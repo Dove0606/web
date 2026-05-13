@@ -132,6 +132,7 @@
   .tag-vpn      { background: #fce4ec; color: #c62828; }
   .tag-no-vpn   { background: #e3f2fd; color: #1565c0; }
   .tag-feature  { background: #f3e8fd; color: #7b1fa2; }
+  .tag-internal { background: #e0f7fa; color: #00838f; }
 
   /* 跳转箭头 */
   .arrow {
@@ -230,7 +231,7 @@
 <main id="app"></main>
 
 <footer>
-  数据来源：LMArena · Artificial Analysis · TTS Arena · X · Reddit · HuggingFace · 各厂商官方发布
+  数据来源：LMArena · Artificial Analysis · TTS Arena · Top3D.ai · X · Reddit · HuggingFace · 各厂商官方发布
 </footer>
 
 <script>
@@ -249,7 +250,8 @@ const SOTA_DATA = {
           desc: "综合能力最强，编程与写作领先，LMArena 榜首",
           tags: [
             { text: "免费/付费", type: "paid" },
-            { text: "需翻墙", type: "vpn" }
+            { text: "需翻墙", type: "vpn" },
+            { text: "公司已接入", type: "internal" }
           ]
         },
         {
@@ -258,7 +260,8 @@ const SOTA_DATA = {
           desc: "事实准确性最高，长上下文处理强，适合分析研究",
           tags: [
             { text: "免费", type: "free" },
-            { text: "需翻墙", type: "vpn" }
+            { text: "需翻墙", type: "vpn" },
+            { text: "公司已接入", type: "internal" }
           ]
         },
         {
@@ -276,7 +279,8 @@ const SOTA_DATA = {
           desc: "中文理解好，不限额，集成文字/图片/视频一站式",
           tags: [
             { text: "免费", type: "free" },
-            { text: "免翻墙", type: "no-vpn" }
+            { text: "免翻墙", type: "no-vpn" },
+            { text: "公司已接入", type: "internal" }
           ]
         }
       ]
@@ -291,7 +295,8 @@ const SOTA_DATA = {
           tags: [
             { text: "付费", type: "paid" },
             { text: "需翻墙", type: "vpn" },
-            { text: "有额度限制", type: "feature" }
+            { text: "有额度限制", type: "feature" },
+            { text: "公司已接入", type: "internal" }
           ]
         },
         {
@@ -323,7 +328,8 @@ const SOTA_DATA = {
           desc: "对话式编辑，理解修改意图准确，适合迭代修图",
           tags: [
             { text: "付费", type: "paid" },
-            { text: "需翻墙", type: "vpn" }
+            { text: "需翻墙", type: "vpn" },
+            { text: "公司已接入", type: "internal" }
           ]
         },
         {
@@ -364,7 +370,8 @@ const SOTA_DATA = {
           desc: "画面质量最高，原生音频 + 4K，但额度贵",
           tags: [
             { text: "付费", type: "paid" },
-            { text: "需翻墙", type: "vpn" }
+            { text: "需翻墙", type: "vpn" },
+            { text: "公司已接入", type: "internal" }
           ]
         },
         {
@@ -373,6 +380,38 @@ const SOTA_DATA = {
           desc: "多镜头序列，角色一致性好，适合连续场景",
           tags: [
             { text: "有免费额度", type: "free" },
+            { text: "免翻墙", type: "no-vpn" }
+          ]
+        }
+      ]
+    },
+    {
+      title: "3D 生成",
+      tools: [
+        {
+          name: "Tripo AI",
+          url: "https://www.tripo3d.ai/",
+          desc: "Top3D 综合榜首，功能全面（控面数/多视角/自动绑骨），出模速度快",
+          tags: [
+            { text: "有免费额度", type: "free" },
+            { text: "需翻墙", type: "vpn" }
+          ]
+        },
+        {
+          name: "Hyper3D (Rodin)",
+          url: "https://hyper3d.ai/",
+          desc: "Top3D 第二，支持 4K 纹理和零件拆分，高精度建模",
+          tags: [
+            { text: "有免费额度", type: "free" },
+            { text: "需翻墙", type: "vpn" }
+          ]
+        },
+        {
+          name: "Hunyuan 3D（腾讯）",
+          url: "https://3d.hunyuan.tencent.com/",
+          desc: "国产免翻墙，每天 20 次免费，支持重拓扑/绑骨/贴图",
+          tags: [
+            { text: "免费", type: "free" },
             { text: "免翻墙", type: "no-vpn" }
           ]
         }
