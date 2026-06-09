@@ -334,7 +334,7 @@
 // 数据区 —— 自动更新脚本只需覆盖此区块
 // ═══════════════════════════════════════════════════
 const SOTA_DATA = {
-  "updateDate": "2026.6.1",
+  "updateDate": "2026.6.9",
   "categories": [
     {
       "title": "文字对话与推理",
@@ -430,9 +430,9 @@ const SOTA_DATA = {
           ]
         },
         {
-          "name": "Flux 2",
+          "name": "FLUX.1 Kontext",
           "url": "https://playground.bfl.ai/",
-          "desc": "精准局部编辑，像 AI 版 Photoshop，让改什么改什么",
+          "desc": "开源 12B 可本地运行，角色一致性最优，精准局部编辑",
           "tags": [
             { "text": "有免费额度", "type": "free" },
             { "text": "需翻墙", "type": "vpn" }
@@ -537,6 +537,15 @@ const SOTA_DATA = {
             { "text": "免费/付费", "type": "paid" },
             { "text": "需翻墙", "type": "vpn" }
           ]
+        },
+        {
+          "name": "v0 by Vercel",
+          "url": "https://v0.dev/",
+          "desc": "生成生产级前端代码，适合开发者快速搭建页面",
+          "tags": [
+            { "text": "免费/付费", "type": "paid" },
+            { "text": "需翻墙", "type": "vpn" }
+          ]
         }
       ]
     },
@@ -544,9 +553,9 @@ const SOTA_DATA = {
       "title": "音频 · 配音",
       "tools": [
         {
-          "name": "MiniMax Speech 2.8",
+          "name": "MiniMax Speech 2.8 HD",
           "url": "https://www.minimax.io/audio",
-          "desc": "40+ 语言，7 种情感模式，价格低，中文发音自然",
+          "desc": "Speech Arena 双榜第一，40+ 语言，7 种情感模式，中文发音自然",
           "tags": [
             { "text": "有免费额度", "type": "free" },
             { "text": "免翻墙", "type": "no-vpn" }
@@ -567,9 +576,9 @@ const SOTA_DATA = {
       "title": "音乐",
       "tools": [
         {
-          "name": "Suno v4.5",
+          "name": "Suno v5.5",
           "url": "https://suno.com/",
-          "desc": "上手最简单，中文歌词效果好，适合快速出 demo",
+          "desc": "上手最简单，人声大幅提升，中文歌词效果好，支持 Voices 换声",
           "tags": [
             { "text": "有免费额度", "type": "free" },
             { "text": "需翻墙", "type": "vpn" }
@@ -589,68 +598,76 @@ const SOTA_DATA = {
   ],
   "news": [
     {
-      "date": "6.1",
-      "tag": "功能更新",
-      "tagType": "update",
-      "title": "GitHub Copilot 切换至 AI Credit 计费",
-      "summary": "所有计划从按请求改为按 token 用量的 Credit 体系，月费不变，代码补全不消耗 Credit",
-      "url": "https://github.blog/news-insights/company-news/github-copilot-is-moving-to-usage-based-billing/"
-    },
-    {
-      "date": "5.29",
+      "date": "6.8",
       "tag": "新产品",
       "tagType": "product",
-      "title": "Google Gemini Spark 上线，24/7 个人 AI Agent",
-      "summary": "面向 AI Ultra 用户，可跨 Gmail/Calendar/Drive 自主执行操作，支持后台持续运行",
-      "url": "https://blog.google/innovation-and-ai/technology/ai/google-io-2026-all-our-announcements/"
+      "title": "Apple WWDC 2026：Siri 升级，Claude 成为 iPhone 可选 AI 助手",
+      "summary": "苹果将 Claude 纳入 iPhone 官方 AI 选项，发布 AI Spatial Reframing 照片重构功能",
+      "url": "https://www.cnbc.com/2026/06/08/apple-wwdc-2026-live-updates.html"
     },
     {
-      "date": "5.29",
+      "date": "6.7",
       "tag": "新模型",
       "tagType": "model",
-      "title": "Anthropic 预告 Mythos 级模型即将公开",
-      "summary": "具备高级编码和网络安全能力，预计数周内面向所有客户开放",
-      "url": "https://fortune.com/2026/05/29/"
+      "title": "MiniMax 发布 M3 大模型，编程评测超越 GPT-5.5",
+      "summary": "单 token 算力压缩至前代 1/20，支持 100 万 token 上下文，解码速度提升 15 倍",
+      "url": "https://juejin.cn/post/7647785782204252200"
     },
     {
-      "date": "5.28",
-      "tag": "新模型",
-      "tagType": "model",
-      "title": "Claude Opus 4.8 发布，SWE-bench 升至 88.6%",
-      "summary": "新增 Dynamic Workflows 可协调数百子 Agent 并行，Fast 模式速度 ×2.5、费用降至 1/3",
-      "url": "https://www.anthropic.com/news/claude-opus-4-8"
-    },
-    {
-      "date": "5.28",
-      "tag": "新模型",
-      "tagType": "model",
-      "title": "OpenAI 发布 GPT-5.3-Codex，统一代码与推理",
-      "summary": "融合 Codex 与 GPT-5 训练栈，速度提升 25%，统一代码生成/推理/通用智能至单一模型",
-      "url": "https://openai.com/index/introducing-gpt-5-3-codex/"
-    },
-    {
-      "date": "5.27",
-      "tag": "新产品",
-      "tagType": "product",
-      "title": "ElevenLabs Music v2 发布，支持中途切换曲风",
-      "summary": "训练数据完全取得授权，无版权风险，可在生成中途切换音乐风格",
-      "url": "https://techcrunch.com/2026/05/27/elevenlabss-new-music-generation-model-can-switch-genres-mid-track/"
-    },
-    {
-      "date": "5.19",
-      "tag": "新模型",
-      "tagType": "model",
-      "title": "Google Gemini 3.5 Flash 发布，编码能力超 3.1 Pro",
-      "summary": "速度为同级 4 倍，定价 $1.50/$9/MTok，1M 上下文，Terminal-Bench 76.2%",
-      "url": "https://ai.google.dev/gemini-api/docs/changelog"
-    },
-    {
-      "date": "5.19",
+      "date": "6.6",
       "tag": "功能更新",
       "tagType": "update",
-      "title": "Google AI 订阅体系重组，新增 $100/月入门档",
-      "summary": "新增 AI Ultra 入门档（含 Gemini Spark），原顶级档从 $250 降至 $200/月",
-      "url": "https://www.digitaltrends.com/computing/googles-ai-subscriptions-get-a-new-100-tier-a-price-cut-and-new-features-across-all-plans/"
+      "title": "ChatGPT 推出 Dreaming V3 记忆系统，Free 用户首次获得记忆功能",
+      "summary": "自动剪除过期/矛盾记忆，Plus/Pro 存储容量翻倍，计算成本降低约 5 倍",
+      "url": "https://www.buildfastwithai.com/blogs/ai-news-today-june-6-2026"
+    },
+    {
+      "date": "6.5",
+      "tag": "新模型",
+      "tagType": "model",
+      "title": "Anthropic 正式发布 Claude Opus 4.8，三端同步上线",
+      "summary": "API/Bedrock/Vertex AI 同步上线，定价 $5/$25 per M tokens，编程与 Agent 能力显著提升",
+      "url": "https://releasebot.io/updates/anthropic/claude"
+    },
+    {
+      "date": "6.4",
+      "tag": "新模型",
+      "tagType": "model",
+      "title": "Google 发布 Gemini 3.5 Flash，编程与 Agent 能力超越 3.1 Pro",
+      "summary": "API 定价 $1.50/$9.00 per M tokens，已成为 Gemini App 默认模型",
+      "url": "https://blog.google/products-and-platforms/products/search/search-io-2026/"
+    },
+    {
+      "date": "6.4",
+      "tag": "新产品",
+      "tagType": "product",
+      "title": "Meshy 3D Agent Beta 全量开放，AI Agent 驱动全流程 3D 创作",
+      "summary": "从想法到可编辑 3D 资产全自动化，面向游戏/影视/3D打印",
+      "url": "https://www.webdisclosure.com/press-release/meshy-etr-meshy-brings-ai-agents-to-3d-creation-meshy-3d-agent-beta-launches-EmSUvSTzvmb"
+    },
+    {
+      "date": "6.3",
+      "tag": "功能更新",
+      "tagType": "update",
+      "title": "Anthropic 将 Mythos 模型扩展至约 200 家组织",
+      "summary": "此前仅约 50 家机构有权访问，现扩展至 15+ 个国家和地区，覆盖能源/医疗/通信",
+      "url": "https://www.cnbc.com/2026/06/02/anthropic-mythos-ai-project-glasswing.html"
+    },
+    {
+      "date": "6.2",
+      "tag": "新模型",
+      "tagType": "model",
+      "title": "Microsoft Build 发布 MAI 系列 7 款自研模型",
+      "summary": "旗舰推理模型 MAI-Thinking-1 追平业界顶尖，MAI-Code-1-Flash 成本效率超 GPT-5.5 达 10 倍",
+      "url": "https://www.cnbc.com/2026/06/02/microsoft-unveils-new-ai-models-lessen-reliance-on-openai-lower-costs.html"
+    },
+    {
+      "date": "6.2",
+      "tag": "功能更新",
+      "tagType": "update",
+      "title": "OpenAI Codex 上线插件共享与 Sites URL 分发",
+      "summary": "团队成员可从目录安装共享插件，通过 Sites 以 URL 对外发布工作成果，Enterprise 默认开启",
+      "url": "https://releasebot.io/updates/openai/codex"
     }
   ]
 };
